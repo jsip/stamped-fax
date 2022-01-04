@@ -1,7 +1,3 @@
 # Stamped Fax
 
-
-**Note: this isn't important**# stamped-fax
-# stamped-fax-old-people
-# stamped-fax-old-people
-# stamped-fax
+**AURAIT PAS BESOIN DE FAIRE ÇA SI LES VIEUX SAVAIENT QU'INTERNET EXISTE**

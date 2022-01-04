@@ -1,0 +1,165 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  padding: 1em;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  display: flex;
+}
+
+.App-collab-symbol {
+  font-weight: 800;
+  color: rgb(19, 19, 19);
+  margin: 0 2em;
+}
+
+.App-icon {
+  font-size: 2em;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-icon {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+input:focus {
+  outline: none;
+}
+
+.Drop-zone {
+  border-radius: 10px;
+  background-color: rgb(235, 235, 235);
+  color: rgb(18, 0, 66);
+  font-weight: 600;
+  border: none;
+  width: 50%;
+  display: block;
+  padding: 2em;
+  margin: auto;
+  margin-top: 3em;
+}
+
+.Phone-input {
+  border: none;
+  border-radius: 5px;
+  padding: 1em;
+  width: 15%;
+  margin: auto;
+  background-color: rgb(235, 235, 235);
+  color: rgb(18, 0, 66);
+  font-weight: 600;
+}
+
+input[type=file]::file-selector-button {
+  border: 1px solid #616161;
+  padding: .25em .5em;
+  border-radius: 5px;
+  background-color: #ffffff;
+  transition: 0.5s;
+  border-width: 2px;
+  color: #252160;
+  font-weight: 600;
+}
+
+input[type=file]::file-selector-button:hover {
+  border-width: 2px;
+  background-color: #adadad;
+}
+
+button {
+  border: none;
+  padding: 1em;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+  font-size: 1em;
+  font-weight: 600;
+  transition: 0.5s;
+}
+
+.Drop-zone-submit {
+  margin-top: 7.5em;
+  width: 40%;
+  background-color: red;
+}
+
+.Drop-zone-submit:hover {
+  &[type="submit"]:not(:disabled) {
+    &:hover {
+      background-color: rgb(126, 0, 0);
+      cursor: pointer;
+    }
+  }
+}
+
+.Fax-rm-button {
+  max-width: min-content;
+}
+
+.Fax-rm-button:hover {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Fax-rm-button:hover {
+    animation: Rm-icon-spin 0.5s linear;
+  }
+}
+
+.File-list {
+  width: 50%;
+  margin: auto;
+  margin-top: 2em;
+}
+
+.File-item {
+  display: grid;
+  grid-template-columns: 1fr 0.15fr 0.1fr;
+  min-height: 3em;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: #d4d4d4;
+}
+
+li {
+  list-style-type: none;
+  color: #252160;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+
+a {
+  text-decoration: none;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes Rm-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(60deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
