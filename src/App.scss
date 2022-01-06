@@ -32,34 +32,40 @@ input:focus {
   outline: none;
 }
 
+form {
+  display: grid;
+  grid-template-columns: 0.25fr 1fr 0.25fr;
+}
+
 .Drop-zone {
+  grid-column: 2;
   border-radius: 10px;
   background-color: rgb(235, 235, 235);
   color: rgb(18, 0, 66);
   font-weight: 600;
+  font-size: 1.1em;
   border: none;
-  width: 50%;
-  display: block;
   padding: 2em;
-  margin: auto;
-  margin-top: 3em;
+  margin-top: 2.5em;
 }
 
 .Phone-input {
+  grid-column: 2;
   border: none;
   border-radius: 5px;
   padding: 1em;
-  width: 15%;
-  margin: auto;
   background-color: rgb(235, 235, 235);
   color: rgb(18, 0, 66);
   font-weight: 600;
+  font-size: 1.1em;
+  width: 50%;
 }
 
 input[type=file]::file-selector-button {
   border: 1px solid #616161;
   padding: .25em .5em;
   border-radius: 5px;
+  margin-right: 1em;
   background-color: #ffffff;
   transition: 0.5s;
   border-width: 2px;
@@ -77,14 +83,14 @@ button {
   padding: 1em;
   border-radius: 10px;
   color: rgb(255, 255, 255);
-  font-size: 1em;
+  font-size: 1.1em;
   font-weight: 600;
   transition: 0.5s;
 }
 
 .Drop-zone-submit {
-  margin-top: 7.5em;
-  width: 40%;
+  grid-column: 2;
+  margin: 2.5em 0;
   background-color: red;
 }
 
@@ -112,8 +118,7 @@ button {
 }
 
 .File-list {
-  width: 50%;
-  margin: auto;
+  grid-column: 2;
   margin-top: 2em;
 }
 
@@ -125,6 +130,7 @@ button {
   align-items: center;
   justify-content: center;
   text-align: left;
+  font-size: 1em;
 }
 
 button:disabled {

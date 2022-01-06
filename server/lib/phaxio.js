@@ -4,7 +4,7 @@ import { validatePhoneNumberFormat } from './utils.js';
 import path from 'path';
 
 config();
-const phaxio = new Phaxio(process.env.PHAXIO_API_KEY, process.env.PHAXIO_SECRET);
+const phaxio = new Phaxio(process.env.PROD_PHAXIO_API_KEY, process.env.PROD_PHAXIO_SECRET);
 const __dirname = path.resolve();
 
 export const createFax = (faxData) => {
