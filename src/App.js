@@ -44,8 +44,8 @@ const App = () => {
       </header>
       <section>
         <form onSubmit={(e) => {buildFax(filesList); e.preventDefault()}}>
-          <input className="Phone-input" type="tel" placeholder="+1 (418) 788-1536" id="faxNumber" required onChange={(e) => handleInput(e)} value={inputValue}></input>
-          <input className="Drop-zone" type="file" onChange={dropHandler} name='faxFiles' multiple></input>
+          <input className="Phone-input" type="tel" placeholder="14187881536" id="faxNumber" required onChange={(e) => handleInput(e)} value={inputValue}></input>
+          <input className="Drop-zone" type="file" onChange={dropHandler} name='faxFiles' multiple accept=".doc,.docx,.pdf,.tif,.jpg,.odt,.txt,.html,.png"></input>
           <div>
             <ul className="File-list">
               {

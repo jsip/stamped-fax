@@ -9,3 +9,5 @@ export const formatFaxNumber = (value, countryCode) => {
   if (phoneNumberLength < 7) return `+${phoneNumber.slice(0, 1)} (${phoneNumber.slice(1, 4)}) ${phoneNumber.slice(4)}`;
   return `+${phoneNumber.slice(0, 1)} (${phoneNumber.slice(1, 4)}) ${phoneNumber.slice(4, 7)}-${phoneNumber.slice(7, 11)}`;
 };
+
+export const faxNumberToE164Format = (faxNumber) => `+${faxNumber.replace(/[^\d]/g, "")}`;

@@ -1,7 +1,12 @@
 import Fax from '../lib/Fax';
 import { verifyDataIntegrity, sendPhaxioFax } from './phaxio';
+import { faxNumberToE164Format } from './rand';
 
-const getFaxNumber = () => document.getElementById('faxNumber') ? document.getElementById('faxNumber').value : null;
+const getFaxNumber = () => {
+  const faxNumber = document.getElementById('faxNumber') ? document.getElementById('faxNumber').value : null;
+  const faxNumberE164 = faxNumberToE164Format(faxNumber);
+  return faxNumberE164;
+}
 
 const buildFax = (faxFiles) => {
   const faxNumber = getFaxNumber();

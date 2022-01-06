@@ -7,7 +7,7 @@ import path from 'path';
 
 const storage = multer.diskStorage({
   destination: ((req, file, cb) => cb(null, 'uploads')),
-  filename: ((req, file, cb) => cb(null, file.fieldname + '-' + Date.now())),
+  filename: ((req, file, cb) => cb(null, file.originalname + '-' + Date.now())),
 })
 
 const upload = multer({ storage: storage })
@@ -42,5 +42,5 @@ app.post('/fax', upload.array('faxFiles'), (req, res, next) => {
 });
 
 app.listen(process.env.PORT, () =>
-  console.log(`listening on port ${process.env.PORT}!`),
+  console.log(`live at http://localhost:${process.env.PORT}`),
 );
