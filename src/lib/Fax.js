@@ -6,9 +6,11 @@ class Fax {
 
   build() {
     const formData = new FormData();
+
     for (const file of this.files) {
       formData.append('faxFiles', file);
     }
+
     formData.append('faxNumber', this.faxNumber);
     return formData
   }

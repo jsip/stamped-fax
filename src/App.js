@@ -3,12 +3,19 @@ import { buildFax } from './utils/handler';
 import { useState } from 'react';
 import StampedSVG from './stamped.svg';
 import { formatFaxNumber } from './utils/rand';
+import { getCommonFaxRecipients } from './utils/commonFaxRecipients';
 
 const App = () => {
   const [filesList, setFiles] = useState([]);
   const [faxButton, setFaxButton] = useState(filesList.length < 1);
   const [inputValue, setInputValue] = useState("");
-  // const [faxStatus, setFaxStatus] = useState({...filesList, status: "unfaxed", emoji: "🛫"});
+  const [commonFaxRecipients, setCommonFaxRecipients] = useState();
+
+  const buildCommonFaxRecipients = () => {
+    getCommonFaxRecipients().then(res => {
+      setCommonFaxRecipients(res);
+    });
+  };
 
   const handleInput = (e) => {
     const formattedFaxNumber = formatFaxNumber(e.target.value);
@@ -26,13 +33,11 @@ const App = () => {
     filesArr.length === 1 ? setFiles(prevState => [...prevState, filesArr[0]]) : filesArr.forEach(file => setFiles(prevState => [...prevState, file]));
 
     setFaxButton(filesArr.length > 0 ? false : true);
-    // setFaxStatus({status: "faxed", emoji: "⏱"});
-
     return false;
   }
 
   return (
-    <div className="App">
+    <div className="App" onLoad={buildCommonFaxRecipients}>
       <header className="App-header">
         <a href="https://app.stamped.ai" target="_blank" rel="noopener noreferrer">
           <img className="App-header-logo" src={StampedSVG} alt="Stamped Logo"></img>
@@ -44,8 +49,19 @@ const App = () => {
       </header>
       <section>
         <form onSubmit={(e) => {buildFax(filesList); e.preventDefault()}}>
-          <input className="Phone-input" type="tel" placeholder="+14187881536" id="faxNumber" required onChange={(e) => handleInput(e)} value={inputValue}></input>
-          <input className="Drop-zone" type="file" onChange={dropHandler} name='faxFiles' multiple accept=".doc,.docx,.pdf,.tif,.jpg,.odt,.txt,.html,.png"></input>
+          <div className="Phone-fax-wrapper">
+            <input className="Phone-input" type="tel" placeholder="+14187881536" id="faxNumber" required onChange={(e) => handleInput(e)} value={inputValue}></input>
+            <select className="Fax-recipients select-wrapper" onChange={e => setInputValue(formatFaxNumber(e.target.value))}>
+              {
+                commonFaxRecipients ? commonFaxRecipients.faxRecipients.map(faxRecipient =>
+                  <option key={faxRecipient.number} value={faxRecipient.number}>
+                    {faxRecipient.name}
+                  </option>
+                ) : null
+              }
+            </select>
+          </div>
+          <input className="Drop-zone" type="file" onChange={dropHandler} name='faxFiles' multiple accept=".pdf"></input>
           <div className="File-list">
             <ul>
               {
@@ -57,7 +73,6 @@ const App = () => {
                       ({(file.size / 1024).toFixed(2)} KB)
                     </b>
                     <div className="Fax-rm-button" onClick={() => setFiles(prevState => prevState.filter(f => (f.name && f.lastModified) !== (file.name && file.lastModified)))}>🗑</div>
-                    {/* <div hidden={faxStatus.status === "unfaxed"} className="Fax-status">{faxStatus.emoji}</div> */}
                   </li>
                 ) : null
               }

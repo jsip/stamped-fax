@@ -19,12 +19,17 @@ config();
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
-app.use(cors());
-
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 app.options('*', cors());
 
-app.get('/', res => {
+app.get('/', (res) => {
   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+});
+
+app.get('/commonFaxRecipients', (req, res) => {
+  res.sendFile(path.join(__dirname, "commonFaxRecipients.json"));
 });
 
 app.post('/fax', upload.array('faxFiles'), (req, res, next) => {
@@ -37,8 +42,14 @@ app.post('/fax', upload.array('faxFiles'), (req, res, next) => {
     return next(error);
   }
 
-  createFax({files, faxNumber});
-  res.sendStatus(200);
+  createFax({files, faxNumber}).then(faxRes => {
+    const response = JSON.stringify(faxRes);
+    res.send(response);
+  }).catch(() => {
+    const error = new Error('Something went wrong. Please try again.');
+    error.httpStatusCode = 500;
+    return next(error);
+  });
 });
 
 app.listen(process.env.PORT, () =>

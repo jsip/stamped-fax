@@ -16,15 +16,15 @@ const buildFax = (faxFiles) => {
   verifyDataIntegrity(formData).then((verifiedFormData) => {
     sendFax(verifiedFormData);
   }).catch((err) => {
-    console.log('error verifying data integrity', err);
+    throw new Error(`Error verifying data integrity: ${err}`);
   });
 }
 
 const sendFax = (formData) => {
   sendPhaxioFax(formData).then((res) => {
-    console.log('fax sent');
+    console.log(`Fax successfully sent, response: ${res}`);
   }).catch((err) => {
-    console.log('error sending fax', err);
+    throw new Error(`Error sending request: ${err}`);
   });
 }
 
