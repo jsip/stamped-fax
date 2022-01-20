@@ -9,10 +9,10 @@ import {
 } from "./utils/commonFaxRecipients";
 import { Popup } from "./components/Popup";
 import { Login } from "./components/Login";
-import { useToken } from "./utils/useToken";
+import { Token } from "./utils/token";
 
 const App = () => {
-  const { token, setToken } = useToken();
+  const { token, setToken } = Token();
 
   const [filesList, setFiles] = useState([]);
   const [faxButton, setFaxButton] = useState(filesList.length < 1);
@@ -22,6 +22,7 @@ const App = () => {
   const [isOpenFax, setIsOpenFax] = useState(false);
   const [isOpenPreset, setIsOpenPreset] = useState(false);
   const [chosenFaxRecipient, setChosenFaxRecipient] = useState();
+  const [faxStatus, setFaxStatus] = useState("");
 
   const togglePopupFax = () => setIsOpenFax(!isOpenFax);
   const togglePopupPreset = () => setIsOpenPreset(!isOpenPreset);
@@ -47,7 +48,9 @@ const App = () => {
   const handleNumberInput = (e) => {
     const formattedFaxNumber = formatFaxNumber(e.target.value);
     commonFaxRecipients.faxRecipients.some((recipient) =>
-      recipient.number === formattedFaxNumber ? setChosenFaxRecipient(recipient) : null
+      recipient.number === formattedFaxNumber
+        ? setChosenFaxRecipient(recipient)
+        : null
     );
     setInputNumber(formattedFaxNumber);
   };
@@ -70,11 +73,25 @@ const App = () => {
     return false;
   };
 
+  const fax = () => {
+    buildFax(filesList).then((res) => {
+      console.log(res);
+    });
+  };
+
+  const logout = () => {
+    Token().deleteToken();
+    window.location.reload();
+  };
+
   if (!token) {
     return <Login setToken={setToken} />;
   } else {
     return (
       <div className="App" onLoad={buildCommonFaxRecipients}>
+        <p className="Logout" onClick={logout}>
+          Logout
+        </p>
         <header className="App-header">
           <a
             href="https://app.stamped.ai"
@@ -99,7 +116,10 @@ const App = () => {
         <section>
           <form
             className="Info-form"
-            onSubmit={(e) => { buildFax(filesList); e.preventDefault(); }}
+            onSubmit={(e) => {
+              fax();
+              e.preventDefault();
+            }}
           >
             <div className="Phone-fax-wrapper">
               <input
@@ -118,9 +138,7 @@ const App = () => {
                 }
                 value={chosenFaxRecipient ? chosenFaxRecipient.number : ""}
               >
-                <option disabled>
-                  Choose a preset number
-                </option>
+                <option disabled>Choose a preset number</option>
                 {commonFaxRecipients
                   ? commonFaxRecipients.faxRecipients.map((faxRecipient) => (
                       <option

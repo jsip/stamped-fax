@@ -13,11 +13,9 @@ export const Login = ({ setToken }) => {
         "Content-type": "application/json",
         Authorization: `Basic ${token}`,
       },
-    })
-      .then((data) => {
-        return data.json();
-      })
-      .catch((err) => console.error(err));
+    }).then((data) => {
+      return data.json();
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -26,7 +24,10 @@ export const Login = ({ setToken }) => {
       username,
       password,
     });
-    setToken(token);
+    if (token) {
+      setToken(token.token);
+      window.location.reload();
+    }
   };
 
   return (

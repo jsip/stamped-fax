@@ -6,6 +6,7 @@ import { createFax } from './lib/phaxio.js';
 import path from 'path';
 import { auth } from './middleware/auth.js';
 import fs from 'fs';
+import { permitted } from './middleware/permitted.js';
 
 // dotenv config
 config();
@@ -39,7 +40,7 @@ app.use('/login', auth, (req, res) => {
 })
 
 // SPA route
-app.get('/', auth, (req, res) => {
+app.get('/', permitted, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
 });
 
@@ -48,7 +49,7 @@ app.get('/api/commonFaxRecipients', (req, res) => {
   res.sendFile(path.join(__dirname, "commonFaxRecipients.json"));
 });
 
-app.put('/api/commonFaxRecipients', auth, (req, res) => {
+app.put('/api/commonFaxRecipients', permitted, (req, res) => {
   const commonFaxRecipients = JSON.stringify(req.body);
   fs.readFile("./commonFaxRecipients.json", 'utf8', function readFileCallback(err, data) {
     if (err) {
@@ -67,7 +68,7 @@ app.put('/api/commonFaxRecipients', auth, (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/api/fax', auth, upload.array('faxFiles'), (req, res, next) => {
+app.post('/api/fax', permitted, upload.array('faxFiles'), (req, res, next) => {
   const files = req.files;
   const faxNumber = req.body.faxNumber;
 

@@ -1,3 +1,5 @@
+import { Token } from "./token";
+
 const getCommonFaxRecipients = async () => {
   const faxRecipients = await fetch(
     "http://localhost:5500/api/commonFaxRecipients"
@@ -12,11 +14,11 @@ const getCommonFaxRecipients = async () => {
 const addCommonFaxRecipient = async (faxRecipient) => {
   await fetch("http://localhost:5500/api/commonFaxRecipients", {
     method: "PUT",
-    body: JSON.stringify(faxRecipient),
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer stamped:simonhelice`,
+      "Authorization": `Bearer ${Token().token}`,
     },
+    body: JSON.stringify(faxRecipient),
   })
     .then((res) => {
       if (res.status === 200) {
