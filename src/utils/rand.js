@@ -1,6 +1,6 @@
 // TODO: implement countrycode if fax is outside of +1 country code (like doube digit country codes)
 export const formatFaxNumber = (value, countryCode) => {
-  if (!value) return value;
+  if (!value) return;
 
   const phoneNumber = value.replace(/[^\d]/g, "");
   const phoneNumberLength = phoneNumber.length;

@@ -1,0 +1,47 @@
+.Login-wrapper {
+  align-items: center;
+  width: 50%;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  color: rgb(18, 0, 66);
+  font-weight: 700;
+}
+
+p {
+  color: rgb(18, 0, 66);
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.Login-input {
+  border: none;
+  border-radius: 5px;
+  padding: 1em;
+  background-color: rgb(235, 235, 235);
+  color: rgb(18, 0, 66);
+  font-weight: 600;
+  font-size: 1.1em;
+  width: 100%;
+  max-width: stretch;
+}
+
+.Submit-button {
+  margin-top: 3em;
+  border: none;
+  padding: 1em;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+  background-color: red;
+  font-size: 1.1em;
+  font-weight: 600;
+  width: 100%;
+  transition: 0.5s;
+}
+
+.Submit-button:hover {
+  background-color: rgb(126, 0, 0);
+  cursor: pointer;
+}
