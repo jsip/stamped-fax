@@ -7,6 +7,7 @@ import fs from "fs";
 config();
 
 const phaxio = new Phaxio(
+  // change to prod
   process.env.TEST_PHAXIO_API_KEY,
   process.env.TEST_PHAXIO_SECRET
 );
@@ -35,7 +36,7 @@ export const createFax = async (faxData) => {
         })
         .catch((err) => {
           console.error("A fax just failed to send: ", err);
-          reject(err)
+          reject(err);
         });
     });
   } else {

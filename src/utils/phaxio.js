@@ -7,7 +7,7 @@ const sendPhaxioFax = async (formData) => {
       Authorization: `Bearer ${Token().token}`,
     },
     body: formData,
-  })
+  });
 };
 
 const verifyDataIntegrity = async (data) => {

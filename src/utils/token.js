@@ -6,6 +6,6 @@ export const Token = () => {
     },
     deleteToken: () => {
       sessionStorage.removeItem(`tokensss`);
-    }
+    },
   };
 };

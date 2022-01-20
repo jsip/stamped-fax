@@ -13,9 +13,14 @@ export const Login = ({ setToken }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Basic ${token}`,
+        Authorization: `Basic ${token}`,
         "Access-Control-Request-Method": ["GET", "OPTIONS", "POST", "PUT"],
-        "Access-Control-Request-Headers": ["Content-Type", "Authorization", "Accept", "Origin"],
+        "Access-Control-Request-Headers": [
+          "Content-Type",
+          "Authorization",
+          "Accept",
+          "Origin",
+        ],
       },
     }).then((data) => {
       return data.json();

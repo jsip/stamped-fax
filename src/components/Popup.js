@@ -7,9 +7,13 @@ export const Popup = (props) => {
       <div className="Popup-box">
         <div>{props.content}</div>
         <div className="Popup-close-icon" onClick={props.handleClose}>
-          {
-            props.reloadOnClose ? <a href="/"><b>{props.closeMessage}</b></a> : <b>{props.closeMessage}</b>
-          }
+          {props.reloadOnClose ? (
+            <a href="/">
+              <b>{props.closeMessage}</b>
+            </a>
+          ) : (
+            <b>{props.closeMessage}</b>
+          )}
         </div>
       </div>
     </div>

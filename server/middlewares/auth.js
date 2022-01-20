@@ -4,9 +4,9 @@ import jwt from "jsonwebtoken";
 config();
 
 export const auth = (req, res, next) => {
-  if ("OPTIONS" === req.method) {
-    next();
-  }
+  // if ("OPTIONS" === req.method) {
+  //   next();
+  // }
   const bearerHeader = req.headers["authorization"];
 
   if (bearerHeader) {
@@ -24,7 +24,7 @@ export const auth = (req, res, next) => {
         process.env.SESSION_SECRET,
         (err, token) => {
           if (err) {
-            console.log(err);
+            return next(err);
           } else {
             return res.json({ token });
           }

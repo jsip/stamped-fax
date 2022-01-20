@@ -28,15 +28,15 @@ app.use(express.static("public"));
 
 // express app config for rate limiting
 app.use(rateLimiterUsingThirdParty);
-app.set('trust proxy', 1)
+app.set("trust proxy", 1);
 
 // express app config for cors
 const corsOptions = {
   origin: process.env.CLIENT_ORIGIN,
   methods: ["GET", "PUT", "POST", "OPTIONS"],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin'],
-}
-app.options('*', cors(corsOptions))
+  allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin"],
+};
+app.options("*", cors(corsOptions));
 
 // file storage config and initialization
 const storage = multer.diskStorage({
@@ -46,21 +46,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.use(function (req, res, next) {
-
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Access-Control-Request-Method, Access-Control-Request-Headers');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
+  res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_ORIGIN);
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
   next();
 });
 

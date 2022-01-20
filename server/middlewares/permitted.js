@@ -12,7 +12,6 @@ export const permitted = (req, res, next) => {
 
     jwt.verify(bearerToken, process.env.SESSION_SECRET, (err, decodedToken) => {
       if (err) {
-        console.log(err);
         const error = new Error("Permitted failed.");
         error.httpStatusCode = 401;
         return next(error);
