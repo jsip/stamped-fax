@@ -1,4 +1,4 @@
-import dotenv, { config } from "dotenv";
+import { config } from "dotenv";
 import Phaxio from "phaxio-official";
 import { validatePhoneNumberFormat } from "./utils.js";
 import path from "path";

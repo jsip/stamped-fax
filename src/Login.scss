@@ -16,6 +16,20 @@ p {
   font-size: 1.1em;
 }
 
+.Login-logo-wrapper {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.Login-logo {
+  text-align: center;
+  width: 50%;
+  height: auto;
+}
+
 .Login-input {
   border: none;
   border-radius: 5px;

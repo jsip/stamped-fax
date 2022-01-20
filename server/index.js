@@ -1,13 +1,13 @@
-import dotenv, { config } from "dotenv";
+import { config } from "dotenv";
 import express from "express";
 import multer from "multer";
 import cors from "cors";
 import { createFax } from "./lib/phaxio.js";
 import path from "path";
-import { auth } from "./middleware/auth.js";
+import { auth } from "./middlewares/auth.js";
 import fs from "fs";
-import { permitted } from "./middleware/permitted.js";
-import rateLimit from "express-rate-limit";
+import { permitted } from "./middlewares/permitted.js";
+import { rateLimiterUsingThirdParty } from "./middlewares/rateLimiter.js";
 
 // dotenv config
 config();
@@ -18,14 +18,6 @@ const __dirname = path.resolve();
 // express app initialization
 const app = express();
 
-// rate limiter for api calls
-const apiLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-})
-
 // express app config for request handling
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,12 +27,16 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
 // express app config for rate limiting
-app.use('/api', apiLimiter)
+app.use(rateLimiterUsingThirdParty);
 app.set('trust proxy', 1)
 
 // express app config for cors
-app.use(cors({ origin: "*" }));
-app.options("*", cors());
+const corsOptions = {
+  origin: process.env.CLIENT_ORIGIN,
+  methods: ["GET", "PUT", "POST", "OPTIONS"],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin'],
+}
+app.options('*', cors(corsOptions))
 
 // file storage config and initialization
 const storage = multer.diskStorage({
@@ -49,8 +45,33 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// login route
-app.use("/login", auth);
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Access-Control-Request-Method, Access-Control-Request-Headers');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
+
+// login endpoint
+app.post("/login", auth, cors(corsOptions), (req, res) => {
+  if (res.statusCode === 200) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
 
 // SPA route
 app.get("/", permitted, (req, res) => {
@@ -111,5 +132,5 @@ app.post("/api/fax", permitted, upload.array("faxFiles"), (req, res, next) => {
 });
 
 app.listen(process.env.PORT, () =>
-  console.log(`live at http://localhost:${process.env.PORT}`)
+  console.log(`live at http://${process.env.HOST}:${process.env.PORT}`)
 );

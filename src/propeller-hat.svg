@@ -1,0 +1,33 @@
+<?xml version="1.0"?><svg width="533.3333333333333" height="533.3333333333333" xmlns="http://www.w3.org/2000/svg">
+ <metadata id="metadata15"/>
+ <defs>
+  <filter id="filter3232">
+   <feGaussianBlur id="feGaussianBlur3234" stdDeviation="1.804501"/>
+  </filter>
+  <filter height="1.197049" y="-0.098525" width="1.261429" x="-0.130714" id="filter3308">
+   <feGaussianBlur id="feGaussianBlur3310" stdDeviation="4.789656"/>
+  </filter>
+  <filter height="1.355262" y="-0.177631" width="1.045647" x="-0.022823" id="filter3344">
+   <feGaussianBlur id="feGaussianBlur3346" stdDeviation="1.929074"/>
+  </filter>
+  <filter height="1.213825" y="-0.106913" width="1.664967" x="-0.332483" id="filter3452">
+   <feGaussianBlur id="feGaussianBlur3454" stdDeviation="1.663396"/>
+  </filter>
+  <filter height="1.851103" y="-0.425551" width="1.047449" x="-0.023725" id="filter3504">
+   <feGaussianBlur id="feGaussianBlur3506" stdDeviation="2.098111"/>
+  </filter>
+ </defs>
+ <metadata id="metadata17">Clipart by Nicu Buculei - piggybankNicu Buculeiimage/svg+xml</metadata>
+ <g>
+  <title>Layer 1</title>
+  <path fill="#003f7f" fill-rule="evenodd" stroke="#000000" stroke-width="10" stroke-linejoin="round" d="m59.220219,384.212036c0,0 51.265202,-264.281982 185.6152,-267.816986c152.911987,4.418999 209.480988,252.790009 212.131989,267.81601c-60.103973,47.72998 -262.512985,90.155975 -397.747189,0.000977z" id="path597"/>
+  <path fill="#3f7f00" fill-rule="evenodd" stroke="#000000" stroke-width="10" stroke-linejoin="round" d="m164.40242,426.638062c-10.016998,-164.403015 66.585999,-304.94001 78.666,-310.244011c16.794006,2.652 124.627014,205.060997 108.717987,310.244011c-45.962982,10.605988 -134.350983,15.910004 -187.383987,0z" id="path598"/>
+  <path fill="#ffed00" fill-rule="evenodd" stroke="#000000" stroke-width="10" stroke-linejoin="round" d="m6.93541,103.571419c-1.76772,19.445 154.81401,32.268639 211.38301,24.313629c16.794006,-7.070999 30.936996,-10.606995 48.614014,-0.883995c68.944,15.910004 230.694,8.839005 227.15799,-16.794006c-17.677002,-22.980995 -162.634003,-20.328995 -231.576996,-7.070999c-8.839005,5.304001 -23.865005,9.723 -44.194,-2.651001c-14.142014,-9.723 -205.346498,-17.8564 -211.384017,3.086372z" id="path599"/>
+  <path fill="#ac00ff" fill-rule="evenodd" stroke="#000000" stroke-width="10" stroke-linejoin="round" d="m228.042419,107.556053c-1.768005,9.722 25.632004,11.488998 35.355011,3.534996c5.302979,-52.148998 -30.937012,-56.568001 -35.355011,-3.534996z" id="path600"/>
+  <path fill="#ffffff" fill-opacity="0.5" fill-rule="evenodd" stroke-width="1pt" filter="url(#filter3232)" d="m63.639599,380.675995c29.168201,-132.582993 97.227406,-229.809998 126.395405,-241.299988c-144.956402,159.097992 -32.70401,312.009979 -126.395405,241.299988z" id="path601"/>
+  <path fill="#ffffff" fill-opacity="0.498039" fill-rule="evenodd" stroke-width="1pt" filter="url(#filter3452)" d="m243.951996,74.851997c-7.955002,8.838806 -15.026001,36.240005 -9.722992,35.356003c20.328995,9.722 2.651993,-18.562202 9.722992,-35.356003z" id="path602"/>
+  <path fill="#000000" fill-opacity="0.25" fill-rule="evenodd" stroke-width="1pt" filter="url(#filter3308)" d="m361.507996,418.683014c50.381012,-40.659027 63.640015,-98.996002 60.989014,-116.673004c7.953979,13.257996 36.238983,72.479004 23.863983,82.200989c-15.024994,9.722992 -35.35498,22.097015 -84.852997,34.472015z" id="path603"/>
+  <path fill="#000000" fill-opacity="0.30038" fill-rule="evenodd" stroke-width="1pt" filter="url(#filter3504)" d="m271.35199,107.556c-5.302979,-4.419998 178.545013,-21.213303 212.132996,1.767998c-51.265991,-11.491394 -152.027985,-7.070999 -212.132996,-1.767998z" id="path604"/>
+  <path fill="#ffffff" fill-opacity="0.771863" fill-rule="evenodd" stroke-width="1pt" filter="url(#filter3344)" d="m12.97301,100.185349c-15.02605,7.0709 136.402997,37.421646 201.810987,21.51265c-84.852997,-4.419998 -124.913086,3.236252 -201.810987,-21.51265z" id="path605"/>
+ </g>
+</svg>

@@ -81,7 +81,7 @@ const App = () => {
       .then((res) => {
         setFaxStatus("🛩");
         setTimeout(() => {
-          if (res.statusCode === 200) {
+          if (res.statusCode === 200 || res.success) {
             setFaxStatus("🛬✅");
           }
           if (res.statusCode === 422) {

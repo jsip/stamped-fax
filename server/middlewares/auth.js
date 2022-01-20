@@ -1,9 +1,12 @@
-import dotenv, { config } from "dotenv";
+import { config } from "dotenv";
 import jwt from "jsonwebtoken";
 
 config();
 
 export const auth = (req, res, next) => {
+  if ("OPTIONS" === req.method) {
+    next();
+  }
   const bearerHeader = req.headers["authorization"];
 
   if (bearerHeader) {
@@ -23,7 +26,7 @@ export const auth = (req, res, next) => {
           if (err) {
             console.log(err);
           } else {
-            res.status(200).json({ token });
+            return res.json({ token });
           }
         }
       );
