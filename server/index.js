@@ -7,6 +7,7 @@ import path from "path";
 import { auth } from "./middleware/auth.js";
 import fs from "fs";
 import { permitted } from "./middleware/permitted.js";
+import rateLimit from "express-rate-limit";
 
 // dotenv config
 config();
@@ -17,11 +18,27 @@ const __dirname = path.resolve();
 // express app initialization
 const app = express();
 
-// express app config
+// rate limiter for api calls
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+// express app config for request handling
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// express app config to serve assets
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
+
+// express app config for rate limiting
+app.use('/api', apiLimiter)
+app.set('trust proxy', 1)
+
+// express app config for cors
 app.use(cors({ origin: "*" }));
 app.options("*", cors());
 
