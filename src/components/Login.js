@@ -50,11 +50,9 @@ export const Login = ({ setToken }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <div>
-          <button type="submit" className="Submit-button">
-            Submit
-          </button>
-        </div>
+        <button type="submit" className="Submit-button">
+          Submit
+        </button>
       </form>
     </div>
   );

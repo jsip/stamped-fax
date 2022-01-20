@@ -3,4 +3,4 @@ export const validatePhoneNumberFormat = (value) => {
     return value;
   }
   throw new Error("Please enter a valid phone number.");
-}
+};

@@ -11,18 +11,17 @@ const buildFax = async (faxFiles) => {
 
   try {
     const verifiedFormData = await verifyDataIntegrity(formData);
-    sendFax(verifiedFormData).then((res) => res).catch((err) => err);
+    return sendFax(verifiedFormData).then((res) => res).catch((err) => err);
   } catch (err_1) {
-    throw new Error(`Error verifying data integrity: ${err_1}`);
+    return err_1
   }
 };
 
 const sendFax = async (formData) => {
   try {
-    const res = await sendPhaxioFax(formData);
-    return res;
+    return sendPhaxioFax(formData).then((res) => res).catch((err) => err);
   } catch (err) {
-    throw new Error(`Error sending request: ${err}`);
+    return err
   }
 };
 

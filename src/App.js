@@ -22,7 +22,8 @@ const App = () => {
   const [isOpenFax, setIsOpenFax] = useState(false);
   const [isOpenPreset, setIsOpenPreset] = useState(false);
   const [chosenFaxRecipient, setChosenFaxRecipient] = useState();
-  const [faxStatus, setFaxStatus] = useState("");
+  const [faxStatus, setFaxStatus] = useState("🛫");
+  const [faxError, setFaxError] = useState("");
 
   const togglePopupFax = () => setIsOpenFax(!isOpenFax);
   const togglePopupPreset = () => setIsOpenPreset(!isOpenPreset);
@@ -73,10 +74,26 @@ const App = () => {
     return false;
   };
 
-  const fax = () => {
-    buildFax(filesList).then((res) => {
-      console.log(res);
-    });
+  const fax = async () => {
+    const res = await buildFax(filesList);
+    res
+      .json()
+      .then((res) => {
+        setFaxStatus("🛩");
+        setTimeout(() => {
+          if (res.statusCode === 200) {
+            setFaxStatus("🛬✅");
+          }
+          if (res.statusCode === 422) {
+            setFaxError(JSON.parse(res.error));
+            setFaxStatus("🛬🔥");
+          }
+        }, 2000);
+      })
+      .catch((err) => {
+        setFaxError(err);
+        setFaxStatus("🛬🔥");
+      });
   };
 
   const logout = () => {
@@ -136,9 +153,11 @@ const App = () => {
                 onChange={(e) =>
                   setInputNumber(formatFaxNumber(e.target.value))
                 }
-                value={chosenFaxRecipient ? chosenFaxRecipient.number : ""}
+                value={
+                  chosenFaxRecipient ? chosenFaxRecipient.number : inputNumber
+                }
               >
-                <option disabled>Choose a preset number</option>
+                <option>Choose a preset number</option>
                 {commonFaxRecipients
                   ? commonFaxRecipients.faxRecipients.map((faxRecipient) => (
                       <option
@@ -231,7 +250,15 @@ const App = () => {
                 <Popup
                   content={
                     <>
-                      <b>Sending your fax..</b>
+                      <b>
+                        {faxStatus === "🛫"
+                          ? "Sending fax.."
+                          : faxStatus === "🛩"
+                          ? "Fax sent, in progress.."
+                          : faxStatus === "🛬✅"
+                          ? "Fax successful!"
+                          : `Fax failed :( ${faxError.message}`}
+                      </b>
                       <ul>
                         {filesList
                           ? filesList.map((file) => (
@@ -244,14 +271,23 @@ const App = () => {
                                   &nbsp;&nbsp;&nbsp; (
                                   {(file.size / 1024).toFixed(2)} KB)
                                 </b>
-                                <div className="Fax-status-icon">🛫</div>
+                                <div className="Fax-status-icon">
+                                  {faxStatus}
+                                </div>
                               </li>
                             ))
                           : null}
                       </ul>
+                      {faxStatus === "🛬🔥" ? (
+                        <b style={{ color: "red" }}>
+                          Please refresh the page and restart the procedure.
+                          Resend feature not yet implemented. Sorry :(
+                        </b>
+                      ) : null}
                     </>
                   }
-                  closeMessage="Done ✅"
+                  closeMessage={faxStatus === "🛬🔥" ? "Refresh ♻️" : "Done ✅"}
+                  reloadOnClose={true}
                   handleClose={togglePopupFax}
                 />
               )}

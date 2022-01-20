@@ -1,20 +1,13 @@
 import { Token } from "./token";
 
 const sendPhaxioFax = async (formData) => {
-  const fax = await fetch("http://localhost:5500/api/fax", {
+  return await fetch("http://localhost:5500/api/fax", {
     method: "POST",
     headers: {
-      "authorization": `Bearer ${Token().token}`,
+      Authorization: `Bearer ${Token().token}`,
     },
     body: formData,
   })
-    .then((res) => {
-      if (res.status === 200) return res.json();
-    })
-    .catch((err) => {
-      throw new Error(`Error sending request: ${err}`);
-    });
-  return fax;
 };
 
 const verifyDataIntegrity = async (data) => {
