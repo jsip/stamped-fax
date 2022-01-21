@@ -64,6 +64,11 @@ app.post("/login", auth, cors(corsOptions), (req, res) => {
   }
 });
 
+// add health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send({ success: true });
+})
+
 // SPA route
 app.get("/", permitted, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "build", "index.html"));

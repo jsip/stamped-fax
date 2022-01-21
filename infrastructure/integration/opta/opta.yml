@@ -1,0 +1,30 @@
+name: integration
+org_name: stamped # Add your own name/org_name -- the name + org_name must be universally unique
+providers:
+  aws:
+    region: us-east-1
+    account_id: 207485477756
+modules:
+  - type: base
+    vpc_log_retention: 400
+  - type: dns
+    domain: fax.integration.stamped.ai
+    delegated: true
+  - type: k8s-cluster
+    spot_instances: true
+    eks_log_retention: 400
+  - type: k8s-base
+    admin_arns:
+      - arn:aws:iam::207485477756:role/stamped-dev-developer-access-role
+      - arn:aws:iam::207485477756:user/github-action-ci-integration
+  - type: helm-chart
+    chart: agent
+    repository: https://assets.logdna.com/charts
+    chart_version: "203.1.0"
+    values:
+      logdna:
+        key: "{{log_dna_push_api_key}}"
+        tags: "integration"
+      extraEnv:
+        - name: LOGDNA_EXCLUSION_RULES
+          value: "!(*_web2_*.log|*_sidekiq_*.log)"

@@ -1,0 +1,33 @@
+name: fax-api
+environments:
+  - name: integration
+    path: "../opta.yml"
+modules:
+  - name: api
+    public_uri: "api.{parent.domain}"
+    type: k8s-service
+    port:
+      http: 8080
+    image: AUTO
+    healthcheck_path: /health
+    env_vars:
+      - name: AWS_REGION
+        value: us-east-1
+      - name: HOST
+        value: '127.0.0.1'
+      - name: PORT
+        value: '8080'
+      - name: CLIENT_ORIGIN
+        value: http://127.0.0.1:3000
+    secrets:
+      - PHAXIO_API_KEY
+      - PHAXIO_SECRET
+      - HOST
+      - PORT
+      - CLIENT_ORIGIN
+      - USERNAME
+      - PASSWORD
+      - SESSION_SECRET
+    resource_request:
+      cpu: 500
+      memory: 1024
