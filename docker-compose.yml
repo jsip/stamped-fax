@@ -1,32 +1,34 @@
 version: '3.8'
 
 services:
-  server:
-    image: stamped-fax/server:latest
-    build: ./server
-    restart: unless-stopped
-    env_file: ./.env
-    ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
-    environment:
-      - CLIENT_ORIGIN=$CLIENT_ORIGIN
-    networks:
-      - backend
-      - frontend
-
-  app:
-    image: stamped-fax/app:latest
+  nginx:
     depends_on:
-      - server
+      - api
+      - client
+    restart: always
     build:
-      context: ./
-      args:
-        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+      dockerfile: Dockerfile
+      context: ./nginx
     ports:
-      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
-    networks:
-      - frontend
+      - "3050:80"
 
-networks:
-  backend:
-  frontend:
+  api:
+    env_file:
+      "./server/.env"
+    build:
+      dockerfile: Dockerfile
+      context: "./server"
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+
+  client:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app

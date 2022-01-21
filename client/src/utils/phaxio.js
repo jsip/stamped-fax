@@ -1,7 +1,7 @@
 import { Token } from "./token";
 
 const sendPhaxioFax = async (formData) => {
-  return await fetch("http://localhost:8080/api/fax", {
+  return await fetch("/api/fax", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${Token().token}`,

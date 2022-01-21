@@ -69,18 +69,18 @@ app.get('/health', (req, res) => {
   res.status(200).send({ success: true });
 })
 
-// SPA route
-app.get("/", permitted, (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-});
+// // SPA route
+// app.get("/", permitted, (req, res) => {
+//   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+// });
 
 // common fax recipients endpoint
-app.get("/api/commonFaxRecipients", permitted, (req, res) => {
+app.get("/commonFaxRecipients", permitted, (req, res) => {
   res.sendFile(path.join(__dirname, "commonFaxRecipients.json"));
 });
 
 // add common fax recipients endpoint
-app.put("/api/commonFaxRecipients", permitted, (req, res) => {
+app.put("/commonFaxRecipients", permitted, (req, res) => {
   const commonFaxRecipients = JSON.stringify(req.body);
   fs.readFile(
     "./commonFaxRecipients.json",
@@ -108,7 +108,7 @@ app.put("/api/commonFaxRecipients", permitted, (req, res) => {
 });
 
 // fax endpoint
-app.post("/api/fax", permitted, upload.array("faxFiles"), (req, res, next) => {
+app.post("/fax", permitted, upload.array("faxFiles"), (req, res, next) => {
   const files = req.files;
   const faxNumber = req.body.faxNumber;
 
