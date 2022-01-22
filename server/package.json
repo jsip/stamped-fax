@@ -15,6 +15,6 @@
     "phaxio-official": "^1.2.2"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   }
 }

@@ -6,25 +6,27 @@ import fs from "fs";
 
 config();
 
-const phaxio = new Phaxio(
-  // change to prod
-  process.env.TEST_PHAXIO_API_KEY,
-  process.env.TEST_PHAXIO_SECRET
-);
 const __dirname = path.resolve();
 
+const phaxio = new Phaxio(
+  process.env.PHAXIO_API_KEY,
+  process.env.PHAXIO_SECRET
+);
+
 export const createFax = async (faxData) => {
-  deleteOldFaxUploads();
+  const uploadPaths = faxData.files.map((file) => path.join(__dirname, file.path));
   const validatedFaxNumber = validatePhoneNumberFormat(faxData.faxNumber);
-  const uploadPaths = faxData.files.map((file) =>
-    path.join(__dirname, file.path)
-  );
+
+  deleteOldFaxUploads();
+
   if (validatedFaxNumber) {
     return new Promise((resolve, reject) => {
       phaxio.faxes
         .create({
           to: validatedFaxNumber,
           file: uploadPaths,
+          batch: true,
+          batch_delay: 15,
         })
         .then((fax) => {
           setTimeout(() => {

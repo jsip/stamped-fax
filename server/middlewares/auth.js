@@ -4,9 +4,7 @@ import jwt from "jsonwebtoken";
 config();
 
 export const auth = (req, res, next) => {
-  // if ("OPTIONS" === req.method) {
-  //   next();
-  // }
+  console.log("auth middleware");
   const bearerHeader = req.headers["authorization"];
 
   if (bearerHeader) {
@@ -26,7 +24,7 @@ export const auth = (req, res, next) => {
           if (err) {
             return next(err);
           } else {
-            return res.json({ token });
+            return res.status(200).json({ token });
           }
         }
       );

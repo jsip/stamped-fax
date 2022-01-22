@@ -17,12 +17,9 @@ export const permitted = (req, res, next) => {
         return next(error);
       }
       const { token } = decodedToken;
-      token.split(":")[0] === process.env.USERNAME &&
-      token.split(":")[1] === process.env.PASSWORD
-        ? next()
-        : next(new Error("Permitted failed."));
+      return token.split(":")[0] === process.env.USERNAME && token.split(":")[1] === process.env.PASSWORD ? next() : next(new Error("Permitted failed."));
     });
   } else {
-    res.sendStatus(403);
+    next(res.sendStatus(403));
   }
 };

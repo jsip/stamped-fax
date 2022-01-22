@@ -9,6 +9,7 @@ export const Login = ({ setToken }) => {
 
   const loginUser = async (credentials) => {
     const token = `${credentials.username}:${credentials.password}`;
+
     return fetch("/api/login", {
       method: "POST",
       headers: {
@@ -22,9 +23,7 @@ export const Login = ({ setToken }) => {
           "Origin",
         ],
       },
-    }).then((data) => {
-      return data.json();
-    });
+    }).then((data) => data.json());
   };
 
   const handleSubmit = async (e) => {
