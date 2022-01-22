@@ -33,4 +33,19 @@ const addCommonFaxRecipient = async (faxRecipient) => {
     .catch((err) => console.error(err));
 };
 
-export { getCommonFaxRecipients, addCommonFaxRecipient };
+const removeCommonFaxRecipient = async (uuid) => {
+  await fetch(`/api/commonFaxRecipients/${uuid}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${Token().token}`,
+    },
+  })
+    .then((res) => {
+      if (res.status === 200) {
+        return res;
+      } else throw new Error("Error removing common fax recipient.");
+    })
+    .catch((err) => console.error(err));
+}
+
+export { getCommonFaxRecipients, addCommonFaxRecipient, removeCommonFaxRecipient };

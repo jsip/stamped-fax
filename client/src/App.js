@@ -6,6 +6,7 @@ import { formatFaxNumber } from "./utils/rand";
 import {
   addCommonFaxRecipient,
   getCommonFaxRecipients,
+  removeCommonFaxRecipient,
 } from "./utils/commonFaxRecipients";
 import { Popup } from "./components/Popup";
 import { Login } from "./components/Login";
@@ -37,7 +38,7 @@ const App = () => {
   const updateFaxRecipient = () => {
     addCommonFaxRecipient({
       name: inputName,
-      number: inputNumber,
+      number: formatFaxNumber(inputNumber),
     })
       .then((res) => {
         buildCommonFaxRecipients();
@@ -46,15 +47,30 @@ const App = () => {
       .catch((err) => console.error(err));
   };
 
+  const removeChosenFaxRecipient = () => {
+    removeCommonFaxRecipient(chosenFaxRecipient.uuid)
+      .then((res) => {
+        buildCommonFaxRecipients();
+        setInputNumber("");
+        setInputName("");
+        setChosenFaxRecipient(null);
+      })
+      .catch((err) => console.error(err));
+  }
+
   const handleNumberInput = (e) => {
     const formattedFaxNumber = formatFaxNumber(e.target.value);
+    presetSetChosenFaxRecipient(formattedFaxNumber);
+    setInputNumber(formattedFaxNumber);
+  };
+
+  const presetSetChosenFaxRecipient = (number) => {
     commonFaxRecipients.faxRecipients.some((recipient) =>
-      recipient.number === formattedFaxNumber
+      recipient.number === number
         ? setChosenFaxRecipient(recipient)
         : null
     );
-    setInputNumber(formattedFaxNumber);
-  };
+  }
 
   const dropHandler = (e) => {
     e.preventDefault();
@@ -150,9 +166,10 @@ const App = () => {
               ></input>
               <select
                 className="Fax-recipients select-wrapper"
-                onChange={(e) =>
-                  setInputNumber(formatFaxNumber(e.target.value))
-                }
+                onChange={(e) => {
+                  setInputNumber(formatFaxNumber(e.target.value));
+                  presetSetChosenFaxRecipient(e.target.value);
+                }}
                 value={
                   chosenFaxRecipient ? chosenFaxRecipient.number : inputNumber
                 }
@@ -161,14 +178,15 @@ const App = () => {
                 {commonFaxRecipients
                   ? commonFaxRecipients.faxRecipients.map((faxRecipient) => (
                       <option
-                        key={faxRecipient.number}
+                        key={faxRecipient.uuid}
                         value={faxRecipient.number}
                       >
-                        {faxRecipient.name}
+                        {faxRecipient.name} {faxRecipient.number}
                       </option>
                     ))
                   : null}
               </select>
+              {chosenFaxRecipient ? (<p style={{ textAlign: "right", gridColumn: "2" }} onClick={removeChosenFaxRecipient}>Remove preset</p>) : null}
               {commonFaxRecipients && inputNumber.length === 17
                 ? commonFaxRecipients.faxRecipients.filter(
                     (fax) => fax.number === inputNumber

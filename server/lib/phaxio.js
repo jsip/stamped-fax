@@ -3,6 +3,7 @@ import Phaxio from "phaxio-official";
 import { validatePhoneNumberFormat } from "./utils.js";
 import path from "path";
 import fs from "fs";
+import { Console } from "console";
 
 config();
 
@@ -26,13 +27,27 @@ export const createFax = async (faxData) => {
           to: validatedFaxNumber,
           file: uploadPaths,
           batch: true,
-          batch_delay: 15,
+          cancel_timeout: 3,
         })
         .then((fax) => {
           setTimeout(() => {
             fax.getInfo().then((info) => {
               console.log("A fax was just sent: ", info);
-              resolve(info);
+              if (info["data"]["status"] === "inprogress") {
+                setInterval(() => {
+                  fax.getInfo().then((info) => {
+                    console.log("A fax is still pending: ", info);
+                    if (info["data"]["status"] === "success") {
+                      resolve(info);
+                    }
+                    if (info["data"]["status"] === "failure") {
+                      reject(info);
+                    }
+                  });
+                }, 20000);
+              } else {
+                resolve(info);
+              }
             });
           }, 5000);
         })
