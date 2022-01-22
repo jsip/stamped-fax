@@ -43,10 +43,10 @@ app.options("*", cors(corsOptions));
 
 // Routes
 
-app.use('/api/health', routes.health);
-app.use('/api/login', routes.login);
-app.use('/api/commonFaxRecipients', routes.commonFaxRecipients);
-app.use('/api/fax', routes.fax);
+app.use('/health', routes.health);
+app.use('/login', routes.login);
+app.use('/commonFaxRecipients', routes.commonFaxRecipients);
+app.use('/fax', routes.fax);
 
 app.listen(process.env.PORT, () =>
   console.log(`live at http://${process.env.HOST}:${process.env.PORT}`)
