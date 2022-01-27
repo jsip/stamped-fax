@@ -27,7 +27,6 @@ export const createFax = async (faxData) => {
           to: validatedFaxNumber,
           file: uploadPaths,
           batch: true,
-          cancel_timeout: 3,
         })
         .then((fax) => {
           setTimeout(() => {
