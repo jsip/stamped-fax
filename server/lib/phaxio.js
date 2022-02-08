@@ -70,7 +70,7 @@ const deleteOldFaxUploads = () => {
     const diff = now - date;
     const filePath = path.join(uploadsDir, file);
 
-    if (diff > 300000) {
+    if (diff > 7200000) {
       fs.unlink(filePath, (err) => {
         if (err) throw err;
       });

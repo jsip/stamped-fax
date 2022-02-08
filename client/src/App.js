@@ -107,6 +107,7 @@ const App = () => {
         }, 2000);
       })
       .catch((err) => {
+        console.error(err);
         setFaxError(err);
         setFaxStatus("🛬🔥");
       });
